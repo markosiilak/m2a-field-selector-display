@@ -151,3 +151,4 @@ ls node_modules/directus-extension-m2a-field-selector-display/
 5. Publish to npm
 6. Push to GitHub
 7. Create a GitHub release
+
