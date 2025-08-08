@@ -37,7 +37,7 @@
     "type": "display",
     "path": "dist/index.js",
     "source": "src/index.ts",
-    "host": "^10.1.8"
+    "host": "^11.0.0"
   },
   "scripts": {
     "build": "directus-extension build",
@@ -50,10 +50,10 @@
     "node": ">=16.0.0"
   },
   "peerDependencies": {
-    "@directus/extensions-sdk": "^9.0.0"
+    "@directus/extensions-sdk": "^15.0.0"
   },
   "devDependencies": {
-    "@directus/extensions-sdk": "^9.0.0",
+    "@directus/extensions-sdk": "^15.0.0",
     "typescript": "^4.9.0"
   }
 }
