@@ -1,7 +1,7 @@
 <template>
   <div class="m2a-field-display">
     <div v-if="items.length > 1" class="items-container">
-      <div v-for="(item) in items" :key="item.value" class="item-tag" v-tooltip.bottom.center="item.label">
+      <div v-for="(item) in items" :key="item.value" v-tooltip.bottom.center="item.label" class="item-tag">
         {{ getFirstTwoLetters(item.label) }}
       </div>
     </div>
@@ -11,60 +11,60 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-// Directus UI components are globally available in extensions
+  import { computed } from 'vue';
+  // Directus UI components are globally available in extensions
 
-const props = defineProps({
-  value: {
-    type: [String, Object, Array],
-    default: null
-  },
-  display: {
-    type: String,
-    default: 'formatted'
-  }
-});
-
-const items = computed(() => {
-  if (!props.value) return [];
-  let parsed;
-  if (typeof props.value === 'string') {
-    try {
-      parsed = JSON.parse(props.value);
-    } catch (error) {
-      return [{ label: props.value, value: props.value }];
+  const props = defineProps({
+    value: {
+      type: [String, Object, Array],
+      default: null
+    },
+    display: {
+      type: String,
+      default: 'formatted'
     }
-  } else if (typeof props.value === 'object') {
-    parsed = props.value;
-  } else {
-    return [{ label: String(props.value), value: String(props.value) }];
-  }
+  });
 
-  if (Array.isArray(parsed)) {
-    return parsed.map(item => {
-      if (typeof item === 'object') {
-        return {
-          label: item.title || item.name || item.value || item.id || '',
-          value: item.id || item.value || item.title || item.name || ''
-        };
+  const items = computed(() => {
+    if (!props.value) return [];
+    let parsed;
+    if (typeof props.value === 'string') {
+      try {
+        parsed = JSON.parse(props.value);
+      } catch (error) {
+        return [{ label: props.value, value: props.value }];
       }
-      return { label: String(item), value: String(item) };
-    });
-  } else if (typeof parsed === 'object') {
-    return [{
-      label: parsed.title || parsed.name || parsed.value || parsed.id || '',
-      value: parsed.id || parsed.value || parsed.title || parsed.name || ''
-    }];
-  }
-  return [{ label: String(parsed), value: String(parsed) }];
-});
+    } else if (typeof props.value === 'object') {
+      parsed = props.value;
+    } else {
+      return [{ label: String(props.value), value: String(props.value) }];
+    }
 
-const getFirstTwoLetters = (text) => {
-  if (!text) return '';
-  // Filter out non-alphanumeric characters and get first two characters
-  const alphanumericOnly = text.toString().replace(/[^a-zA-Z0-9]/g, '');
-  return alphanumericOnly.substring(0, 2).toUpperCase();
-};
+    if (Array.isArray(parsed)) {
+      return parsed.map(item => {
+        if (typeof item === 'object') {
+          return {
+            label: item.title || item.name || item.value || item.id || '',
+            value: item.id || item.value || item.title || item.name || ''
+          };
+        }
+        return { label: String(item), value: String(item) };
+      });
+    } else if (typeof parsed === 'object') {
+      return [{
+        label: parsed.title || parsed.name || parsed.value || parsed.id || '',
+        value: parsed.id || parsed.value || parsed.title || parsed.name || ''
+      }];
+    }
+    return [{ label: String(parsed), value: String(parsed) }];
+  });
+
+  const getFirstTwoLetters = (text) => {
+    if (!text) return '';
+    // Filter out non-alphanumeric characters and get first two characters
+    const alphanumericOnly = text.toString().replace(/[^a-zA-Z0-9]/g, '');
+    return alphanumericOnly.substring(0, 2).toUpperCase();
+  };
 
 </script>
 
